@@ -19273,7 +19273,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-12-03T07:12:51.050Z",
+  "updatedAt": "2024-12-04T07:57:09.137Z",
   "devdoc": {
     "errors": {
       "ERC721IncorrectOwner(address,uint256,address)": [
