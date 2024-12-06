@@ -2,5 +2,5 @@ const ShoeTest = artifacts.require("ShoeTest"); // this loads the ShoeTest Json 
 module.exports = function (deployer, network, accounts) {
   console.log({ network });
   console.log({ accounts });
-  deployer.deploy(ShoeTest, "0x5B38Da6a701c568545dCfcB03FcB875f56beddC4");
+  deployer.deploy(ShoeTest, "0x3268EC9EbDaB412bB23add08E15Db733F1a4102F");
 };
