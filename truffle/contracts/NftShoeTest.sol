@@ -9,9 +9,9 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 contract ShoeTest is ERC721, ERC721URIStorage, Ownable {
     uint256 private _nextTokenId;
 
-    constructor(address initialOwner)
+    constructor()
         ERC721("ShoeTest", "STK")
-        Ownable(initialOwner)
+        Ownable(msg.sender)
     {}
 
     function _baseURI() internal pure override returns (string memory) {
