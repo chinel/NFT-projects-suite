@@ -44,7 +44,17 @@
 // require('dotenv').config();
 // const { MNEMONIC, PROJECT_ID } = process.env;
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
+const HDWalletProvider = require("@truffle/hdwallet-provider");
+const fs = require("fs");
+const path = require("path");
+const mnemonicPhrase = fs
+  .readFileSync(path.join(__dirname, ".secret"))
+  .toString()
+  .trim();
+const infuraProjectId = fs
+  .readdirSync(path.join(__dirname, ".infura"))
+  .toString()
+  .trim();
 
 module.exports = {
   /**

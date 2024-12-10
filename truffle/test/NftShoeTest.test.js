@@ -11,10 +11,11 @@ contract("ShoeTest", (accounts) => {
     const ownerOf = await shoeTestInstance.ownerOf(0);
     console.log("ownerOf(0)--->", ownerOf);
     console.log("accounts[1]-->", accounts[1]);
+    console.log(txResult.logs[0].args);
     truffleAssertions.eventEmitted(txResult, "Transfer", {
       from: "0x0000000000000000000000000000000000000000",
       to: accounts[1],
-      tokenId: web3.utils.toBN("0")
+      tokenId: web3.utils.toBN("0"),
     });
     //expect(ownerOf).equal(accounts[1]);
     //assert.equal(ownerOf, accounts[1], "Owner of Token is not equal to account 2");
