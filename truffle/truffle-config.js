@@ -47,12 +47,12 @@
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 const fs = require("fs");
 const path = require("path");
-const mnemonicPhrase = fs
+const SECRET_PHRASE = fs
   .readFileSync(path.join(__dirname, ".secret"))
   .toString()
   .trim();
-const infuraProjectId = fs
-  .readdirSync(path.join(__dirname, ".infura"))
+const INFURA_API_KEY = fs
+  .readFileSync(path.join(__dirname, ".infura"))
   .toString()
   .trim();
 
@@ -105,6 +105,26 @@ module.exports = {
     //   timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
     //   skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
     // },
+
+    sepolia: {
+      provider: () =>
+        new HDWalletProvider(
+          SECRET_PHRASE,
+          `https://sepolia.infura.io/v3/${INFURA_API_KEY}`
+        ),
+      network_id: 11155111, // Sepolia's network ID
+      confirmations: 2,
+      gas: 5500000,
+      networkCheckTimeout: 100000000,
+      timeoutBlocks: 200,
+      skipDryRun: true,
+      chainId: 11155111,
+      //gas: 4500000, // Gas limit
+      //gasPrice: 10000000000, // 10 Gwei
+      //confirmations: 1, // Wait for 2 confirmations
+      //timeoutBlocks: 200, // Wait for up to 200 blocks
+      //skipDryRun: true, // Skip the dry run, which first tries to deploy and then deploy which you don't need for public networks
+    },
     //
     // Useful for private networks
     // private: {
