@@ -62,6 +62,13 @@ const ALCHEMY_API_KEY = fs
   .toString()
   .trim();
 
+const ETHER_SCAN_API_KEY = fs
+  .readFileSync(path.join(__dirname, ".etherscan"))
+  .toString()
+  .trim();
+
+console.log(ETHER_SCAN_API_KEY);
+
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
@@ -86,7 +93,10 @@ module.exports = {
     //  network_id: "*",       // Any network (default: none)
     // },
     //
-
+    dashboard: {
+      host: "localhost",
+      port: 24012,
+    },
     ganache: {
       host: "127.0.0.1",
       port: "8545",
@@ -160,6 +170,11 @@ module.exports = {
       //  evmVersion: "byzantium"
       // }
     },
+  },
+
+  plugins: ["truffle-plugin-verify"],
+  api_keys: {
+    etherscan: ETHER_SCAN_API_KEY,
   },
 
   // Truffle DB is currently disabled by default; to enable it, change enabled:
