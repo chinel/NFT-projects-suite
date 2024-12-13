@@ -44,6 +44,8 @@
 // require('dotenv').config();
 // const { MNEMONIC, PROJECT_ID } = process.env;
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 const fs = require("fs");
 const path = require("path");
@@ -55,6 +57,17 @@ const INFURA_API_KEY = fs
   .readFileSync(path.join(__dirname, ".infura"))
   .toString()
   .trim();
+const ALCHEMY_API_KEY = fs
+  .readFileSync(path.join(__dirname, ".alchemy"))
+  .toString()
+  .trim();
+
+const ETHER_SCAN_API_KEY = fs
+  .readFileSync(path.join(__dirname, ".etherscan"))
+  .toString()
+  .trim();
+
+console.log(ETHER_SCAN_API_KEY);
 
 module.exports = {
   /**
@@ -80,7 +93,10 @@ module.exports = {
     //  network_id: "*",       // Any network (default: none)
     // },
     //
-
+    dashboard: {
+      host: "localhost",
+      port: 24012,
+    },
     ganache: {
       host: "127.0.0.1",
       port: "8545",
@@ -107,23 +123,25 @@ module.exports = {
     // },
 
     sepolia: {
-      provider: () =>
-        new HDWalletProvider(
+      provider: () => {
+        if (!ALCHEMY_API_KEY || !SECRET_PHRASE) {
+          throw new Error(
+            "Please set API_KEY and SECRET_PHRASE in your environment variables."
+          );
+        }
+        // await sleep(200); // Throttle with 200ms delay
+        return new HDWalletProvider(
           SECRET_PHRASE,
-          `https://sepolia.infura.io/v3/${INFURA_API_KEY}`
-        ),
-      network_id: 11155111, // Sepolia's network ID
+          `https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_API_KEY}` // `https://sepolia.infura.io/v3/${INFURA_API_KEY}` for infura
+        );
+      },
+      network_id: 11155111,
+      gas: 4500000,
+      gasPrice: 20000000000,
       confirmations: 2,
-      gas: 5500000,
-      networkCheckTimeout: 100000000,
-      timeoutBlocks: 200,
+      timeoutBlocks: 50,
       skipDryRun: true,
       chainId: 11155111,
-      //gas: 4500000, // Gas limit
-      //gasPrice: 10000000000, // 10 Gwei
-      //confirmations: 1, // Wait for 2 confirmations
-      //timeoutBlocks: 200, // Wait for up to 200 blocks
-      //skipDryRun: true, // Skip the dry run, which first tries to deploy and then deploy which you don't need for public networks
     },
     //
     // Useful for private networks
@@ -152,6 +170,11 @@ module.exports = {
       //  evmVersion: "byzantium"
       // }
     },
+  },
+
+  plugins: ["truffle-plugin-verify"],
+  api_keys: {
+    etherscan: ETHER_SCAN_API_KEY,
   },
 
   // Truffle DB is currently disabled by default; to enable it, change enabled:
