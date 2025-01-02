@@ -6,6 +6,8 @@ import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import {ERC721URIStorage} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
+import "hardhat/console.sol";
+
 contract ShoeTest is ERC721, ERC721URIStorage, Ownable {
     uint256 private _nextTokenId;
 
@@ -20,6 +22,7 @@ contract ShoeTest is ERC721, ERC721URIStorage, Ownable {
 
     function safeMint(address to, string memory uri) public onlyOwner {
         uint256 tokenId = _nextTokenId++;
+        console.log("safe mint token id-->", tokenId);
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
     }
