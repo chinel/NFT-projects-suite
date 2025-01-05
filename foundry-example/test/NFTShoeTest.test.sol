@@ -31,6 +31,7 @@ contract NFTTest is
     }
 
     function testMintingNfts() public {
+        //The msg.sender during a test defaults to the zero address (0x0) unless explicitly set using vm.prank or vm.startPrank. 
         vm.prank(testAddress);
 
         // Mint the NFT using `testAddress`
