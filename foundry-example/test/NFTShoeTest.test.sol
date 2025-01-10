@@ -45,4 +45,13 @@ contract NFTTest is
         );
         assertEq(shoeTest.tokenURI(0), "https://www.jsonkeeper.com/b/FLVJ");
     }
+
+    function testPurchaseNft () public {
+        address purchaser = address(0x1);
+
+        //Giving this address some ether
+        vm.startPrank(purchaser);//this will instruct the underlining vm to run every transaction from now with this address
+        shoeTest.safeMint(purchaser, "FLVJ");
+        vm.stopPrank();//This will stop using the address for transactions
+    }
 }
