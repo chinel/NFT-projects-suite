@@ -12,6 +12,8 @@ contract ShoeTestScript is Script {
   // Use Foundry's vm.addr to get an address from a private key
         uint256 privateKey = 1; // You can change this to use a different address
         testAddress = vm.addr(privateKey);
+        console.log("Test Address:", testAddress);
+
 
     }
 
